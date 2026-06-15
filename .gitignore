@@ -60,3 +60,38 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# ===== Java / Maven =====
+target/
+*.class
+*.jar
+*.war
+!gradle/wrapper/gradle-wrapper.jar
+.mvn/
+
+# ===== Node.js (Cloud Functions) =====
+node_modules/
+package-lock.json
+
+# ===== IDE =====
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== Secrets =====
+*.p12
+*.p8
+*.jks
+application-local.yml
+.env
+*.env
+
+# ===== Logs =====
+*.log
+
