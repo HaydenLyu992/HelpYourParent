@@ -238,14 +238,12 @@ struct BindingRequestView: View {
             defer { isProcessing = false }
 
             do {
-                let _: APIResponse<String>? = try? await apiClient.postEmpty(
+                let _: APIResponse<String> = try await apiClient.postEmpty(
                     Endpoint.acceptBind(requestId).path
                 )
 
                 successMessage = String(localized: "binding_accept_success", defaultValue: "绑定成功！你们已经成为守护关系 💕")
-                errorMessage = successMessage
                 showSuccess = true
-                showError = true
             } catch {
                 errorMessage = error.localizedDescription
                 showError = true
@@ -260,7 +258,7 @@ struct BindingRequestView: View {
             defer { isProcessing = false }
 
             do {
-                let _: APIResponse<String>? = try? await apiClient.postEmpty(
+                let _: APIResponse<String> = try await apiClient.postEmpty(
                     Endpoint.rejectBind(requestId).path
                 )
 

@@ -206,7 +206,7 @@ struct ElderHomeView: View {
 
         // Request HealthKit authorization if not yet granted
         if !hkManager.isAuthorized {
-            try? await hkManager.requestAuthorization()
+            _ = try? await hkManager.requestAuthorization()
         }
 
         // Fetch all metrics concurrently

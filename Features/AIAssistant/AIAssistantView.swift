@@ -213,7 +213,7 @@ private struct FlowLayout: Layout {
             var x = bounds.minX
             for size in row.sizes {
                 let centerY = y + row.maxHeight / 2
-                subviews[size.index].place(at: CGPoint(x: x, y: centerY), anchor: .leading, proposal: .init(size.height))
+                subviews[size.index].place(at: CGPoint(x: x, y: centerY), anchor: .leading, proposal: .init(width: size.width, height: size.height))
                 x += size.width + spacing
             }
             y += row.maxHeight + spacing
@@ -221,7 +221,7 @@ private struct FlowLayout: Layout {
     }
 
     private struct Row {
-        var sizes: [(index: Int, width: CGFloat)] = []
+        var sizes: [(index: Int, width: CGFloat, height: CGFloat)] = []
         var maxHeight: CGFloat = 0
     }
 
@@ -235,11 +235,35 @@ private struct FlowLayout: Layout {
                 rows.append(Row())
             }
             var row = rows[rows.count - 1]
-            row.sizes.append((i, size.width))
+            row.sizes.append((i, size.width, size.height))
             row.maxHeight = max(row.maxHeight, size.height)
             rows[rows.count - 1] = row
         }
         return rows
+    }
+}
+
+// MARK: - Doodle Card View
+
+private struct DoodleCardView<Content: View>: View {
+    let background: Color
+    let content: Content
+
+    init(background: Color = .white, @ViewBuilder content: () -> Content) {
+        self.background = background
+        self.content = content()
+    }
+
+    var body: some View {
+        content
+            .padding(20)
+            .background(background)
+            .clipShape(RoundedRectangle(cornerRadius: 22))
+            .overlay(
+                RoundedRectangle(cornerRadius: 22)
+                    .stroke(Color.doodleInk, lineWidth: 3)
+            )
+            .shadow(color: .black.opacity(0.10), radius: 0, x: 3, y: 5)
     }
 }
 

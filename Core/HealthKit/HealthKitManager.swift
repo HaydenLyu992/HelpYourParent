@@ -201,7 +201,7 @@ final class HealthKitManager {
         // Filter for time asleep (inBed / asleep values)
         let asleepValues: Set<HKCategoryValueSleepAnalysis> = [.asleepUnspecified, .asleepREM, .asleepCore, .asleepDeep]
         let totalSeconds = samples
-            .filter { asleepValues.contains($0.value) }
+            .filter { HKCategoryValueSleepAnalysis(rawValue: $0.value).map { asleepValues.contains($0) } ?? false }
             .reduce(0.0) { $0 + $0 == 0 ? $1.endDate.timeIntervalSince($1.startDate) : $1.endDate.timeIntervalSince($1.startDate) }
 
         guard totalSeconds > 0 else {

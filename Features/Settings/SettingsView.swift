@@ -90,7 +90,7 @@ struct SettingsView: View {
                     DoodleCardView {
                         VStack(alignment: .leading, spacing: 10) {
                             HStack {
-                                Text(boundUsersSectionTitle)
+                                boundUsersSectionTitle
                                     .font(.system(size: 17, weight: .black, design: .rounded))
                                     .foregroundStyle(.doodleInk)
                                 Spacer()

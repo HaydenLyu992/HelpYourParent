@@ -164,6 +164,30 @@ private struct GuardianCardView: View {
     }
 }
 
+// MARK: - Doodle Card View
+
+private struct DoodleCardView<Content: View>: View {
+    let background: Color
+    let content: Content
+
+    init(background: Color = .white, @ViewBuilder content: () -> Content) {
+        self.background = background
+        self.content = content()
+    }
+
+    var body: some View {
+        content
+            .padding(20)
+            .background(background)
+            .clipShape(RoundedRectangle(cornerRadius: 22))
+            .overlay(
+                RoundedRectangle(cornerRadius: 22)
+                    .stroke(Color.doodleInk, lineWidth: 3)
+            )
+            .shadow(color: .black.opacity(0.10), radius: 0, x: 3, y: 5)
+    }
+}
+
 // MARK: - Preview
 
 #Preview {

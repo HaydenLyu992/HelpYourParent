@@ -1,5 +1,26 @@
 import SwiftUI
 
+// MARK: - ShapeStyle Forwarding
+
+extension ShapeStyle where Self == Color {
+    static var doodleCoral: Color { Color.doodleCoral }
+    static var doodleCoralLight: Color { Color.doodleCoralLight }
+    static var doodleCoralDark: Color { Color.doodleCoralDark }
+    static var doodleSky: Color { Color.doodleSky }
+    static var doodleSkyLight: Color { Color.doodleSkyLight }
+    static var doodleSun: Color { Color.doodleSun }
+    static var doodleSunLight: Color { Color.doodleSunLight }
+    static var doodleCream: Color { Color.doodleCream }
+    static var doodleWhite: Color { Color.doodleWhite }
+    static var doodleInk: Color { Color.doodleInk }
+    static var doodleInkLight: Color { Color.doodleInkLight }
+    static var doodleInkLighter: Color { Color.doodleInkLighter }
+    static var doodleBadgeOK: Color { Color.doodleBadgeOK }
+    static var doodleBadgeWarn: Color { Color.doodleBadgeWarn }
+    static var doodleBadgeDanger: Color { Color.doodleBadgeDanger }
+    static var doodleMint: Color { Color.doodleMint }
+}
+
 /// Doodle-style color palette for the 康护亲 app.
 ///
 /// Based on the design system defined in UIDesign.html.

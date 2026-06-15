@@ -126,7 +126,7 @@ struct HealthDetailView: View {
         defer { isLoading = false }
 
         if !hkManager.isAuthorized {
-            try? await hkManager.requestAuthorization()
+            _ = try? await hkManager.requestAuthorization()
         }
 
         do {

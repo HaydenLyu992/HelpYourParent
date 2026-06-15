@@ -203,7 +203,7 @@ final class APIClient {
     private func perform<T: Codable>(_ request: URLRequest) async throws -> T {
         do {
             let (data, response) = try await session.data(for: request)
-            return try handleResponse(data: data, response: response, for: request)
+            return try await handleResponse(data: data, response: response, for: request)
         } catch let error as APIError {
             throw error
         } catch {
