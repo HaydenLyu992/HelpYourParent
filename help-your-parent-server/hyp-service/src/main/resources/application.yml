@@ -1,0 +1,85 @@
+spring:
+  application:
+    name: hyp-service
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/hyp_db?useSSL=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8mb4
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 4
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+  jackson:
+    property-naming-strategy: LOWER_CAMEL_CASE
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: ${SERVER_PORT:8080}
+
+logging:
+  level:
+    com.hyp: DEBUG
+    org.springframework.security: INFO
+
+# ---- DeepSeek ----
+deepseek:
+  api-key: ${DEEPSEEK_API_KEY:}
+  base-url: https://api.deepseek.com/v1
+  model: deepseek-chat
+  timeout-seconds: 30
+  max-retries: 2
+
+# ---- JWT ----
+jwt:
+  access-token-expiration: 7200
+  refresh-token-expiration: 604800
+  private-key: ${JWT_PRIVATE_KEY:}
+  public-key: ${JWT_PUBLIC_KEY:}
+
+# ---- Alert ----
+alert:
+  merge-window-seconds: 300
+  max-retries: 3
+  retry-backoff-ms: 1000
+
+# ---- APNs ----
+apns:
+  key-id: ${APNS_KEY_ID:}
+  team-id: ${APNS_TEAM_ID:}
+  private-key-path: ${APNS_PRIVATE_KEY_PATH:}
+  topic: com.hyp.helpyourparent
+  use-sandbox: ${APNS_USE_SANDBOX:true}

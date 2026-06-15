@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.hyp</groupId>
+    <artifactId>help-your-parent-server</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>HelpYourParent Server</name>
+    <description>康护亲 — 远程守护父母健康的后端服务</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.5</version>
+        <relativePath/>
+    </parent>
+
+    <properties>
+        <java.version>17</java.version>
+        <spring-cloud.version>2023.0.2</spring-cloud.version>
+        <spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
+        <jjwt.version>0.12.5</jjwt.version>
+        <querydsl.version>5.0.0</querydsl.version>
+        <hyp.version>1.0.0-SNAPSHOT</hyp.version>
+    </properties>
+
+    <modules>
+        <module>hyp-common</module>
+        <module>hyp-user</module>
+        <module>hyp-guardian</module>
+        <module>hyp-alert</module>
+        <module>hyp-health</module>
+        <module>hyp-ai</module>
+        <module>hyp-gateway</module>
+        <module>hyp-service</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Internal modules -->
+            <dependency>
+                <groupId>com.hyp</groupId>
+                <artifactId>hyp-common</artifactId>
+                <version>${hyp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hyp</groupId>
+                <artifactId>hyp-user</artifactId>
+                <version>${hyp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hyp</groupId>
+                <artifactId>hyp-guardian</artifactId>
+                <version>${hyp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hyp</groupId>
+                <artifactId>hyp-alert</artifactId>
+                <version>${hyp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hyp</groupId>
+                <artifactId>hyp-health</artifactId>
+                <version>${hyp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hyp</groupId>
+                <artifactId>hyp-ai</artifactId>
+                <version>${hyp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hyp</groupId>
+                <artifactId>hyp-gateway</artifactId>
+                <version>${hyp.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

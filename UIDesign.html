@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>康护亲 — 涂鸦风 UI 设计稿</title>
+<style>
+/* ============================================
+   康护亲 · 涂鸦手绘设计系统
+   参考：多邻国的轻松亲切感
+   基调：珊瑚暖橘 + 奶油米白（不用绿色）
+   ============================================ */
+
+:root {
+  /* 主色调 — 温暖珊瑚 */
+  --coral:        #FF6B6B;
+  --coral-light:  #FFE0E0;
+  --coral-dark:   #E05555;
+  /* 辅助色 — 天空蓝 */
+  --sky:          #5BA4E6;
+  --sky-light:    #DCEFFF;
+  /* 强调色 — 暖阳黄 */
+  --sun:          #FFC940;
+  --sun-light:    #FFF3D0;
+  /* 中性色 */
+  --cream:        #FFFBF3;
+  --white:        #FFFFFF;
+  --ink:          #2D2D2D;
+  --ink-light:    #777777;
+  --ink-lighter:  #BBBBBB;
+  /* 阴影 */
+  --shadow-sm:    2px 3px 0 rgba(0,0,0,0.08);
+  --shadow-md:    3px 5px 0 rgba(0,0,0,0.10);
+  --shadow-lg:    5px 8px 0 rgba(0,0,0,0.12);
+
+  /* 字体 */
+  --font-rounded: 'Nunito', 'PingFang SC', 'Noto Sans SC', sans-serif;
+  --font-hand:    'Gaegu', 'KaiTi', 'STKaiti', cursive;
+
+  /* 描边 — 模拟马克笔 */
+  --stroke-thin:  2px solid #2D2D2D;
+  --stroke:       3px solid #2D2D2D;
+  --stroke-fat:   4px solid #2D2D2D;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-rounded);
+  background: #F5F0E8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  gap: 60px;
+}
+
+/* ==================== 页面容器 ==================== */
+.screen-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.screen-label {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.screen-label::before, .screen-label::after {
+  content: "✏️";
+  font-size: 18px;
+}
+
+/* ==================== 手机框 ==================== */
+.phone {
+  width: 390px;
+  height: 844px;
+  background: var(--cream);
+  border-radius: 44px;
+  border: 5px solid #2D2D2D;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 8px 12px 0 rgba(0,0,0,0.12), 16px 24px 48px rgba(0,0,0,0.08);
+}
+.phone::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 30px;
+  background: #2D2D2D;
+  border-radius: 20px;
+  z-index: 10;
+}
+
+.phone-content {
+  padding: 56px 24px 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==================== 涂鸦卡片 ==================== */
+.card {
+  background: var(--white);
+  border-radius: 22px;
+  border: var(--stroke);
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+  /* 微旋转模拟手绘 */
+  transform: rotate(-0.3deg);
+}
+.card:nth-child(even) { transform: rotate(0.2deg); }
+
+.card-highlight {
+  background: var(--coral-light);
+  border-radius: 22px;
+  border: var(--stroke);
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+}
+.card-sky {
+  background: var(--sky-light);
+  border-radius: 22px;
+  border: var(--stroke);
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+}
+.card-sun {
+  background: var(--sun-light);
+  border-radius: 22px;
+  border: var(--stroke);
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+}
+
+/* ==================== 按钮 ==================== */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--coral);
+  color: white;
+  border: var(--stroke);
+  border-radius: 30px;
+  padding: 16px 32px;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 3px 5px 0 rgba(0,0,0,0.15);
+  transition: transform 0.15s, box-shadow 0.15s;
+  letter-spacing: 1px;
+}
+.btn-primary:active { transform: translate(1px, 2px); box-shadow: 1px 2px 0 rgba(0,0,0,0.15); }
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: white;
+  color: var(--ink);
+  border: var(--stroke);
+  border-radius: 30px;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  border: 2px solid #2D2D2D;
+  cursor: pointer;
+}
+
+/* ==================== 标签/徽章 ==================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 800;
+  border: 2px solid #2D2D2D;
+}
+.badge-ok     { background: #FFD93D; color: #2D2D2D; }  /* 黄色 — 正常 */
+.badge-warn   { background: #FFA94D; color: white; }      /* 橙色 — 注意 */
+.badge-danger { background: #FF6B6B; color: white; }      /* 红色 — 危险 */
+
+/* ==================== 手绘分割线 ==================== */
+.doodle-line {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  padding: 8px 0;
+}
+.doodle-line span {
+  width: 3px; height: 3px;
+  background: #CCC;
+  border-radius: 50%;
+}
+
+/* ==================== 星星装饰 ==================== */
+.stars {
+  display: flex;
+  gap: 12px;
+  font-size: 22px;
+}
+.star1 { transform: rotate(-12deg); }
+.star2 { transform: rotate(8deg); font-size: 16px; }
+.star3 { transform: rotate(-5deg); font-size: 28px; }
+
+/* ==================== 头像 ==================== */
+.avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--coral-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  border: var(--stroke);
+  flex-shrink: 0;
+}
+.avatar-sm {
+  width: 40px; height: 40px;
+  font-size: 20px;
+}
+
+/* ==================== 指标卡 ==================== */
+.metric-row {
+  display: flex;
+  gap: 10px;
+}
+.metric-card {
+  flex: 1;
+  background: white;
+  border-radius: 18px;
+  border: var(--stroke);
+  padding: 14px 10px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+.metric-value {
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1;
+}
+.metric-label {
+  font-size: 12px;
+  color: var(--ink-light);
+  margin-top: 4px;
+}
+.metric-emoji {
+  font-size: 22px;
+}
+
+/* ==================== 进度条 ==================== */
+.progress-wrap {
+  margin-top: 8px;
+}
+.progress-bar {
+  height: 18px;
+  background: #EEE;
+  border-radius: 10px;
+  border: var(--stroke);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--coral);
+  border-radius: 10px;
+  border-right: 2px solid #2D2D2D;
+  transition: width 1s ease;
+}
+
+/* ==================== 波形装饰 ==================== */
+.wave {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 60px;
+  overflow: hidden;
+}
+.wave svg { display: block; }
+
+/* ==================== 气泡 ==================== */
+.bubble-bot {
+  background: white;
+  border: var(--stroke);
+  border-radius: 20px 20px 20px 6px;
+  padding: 12px 16px;
+  font-size: 15px;
+  max-width: 80%;
+  box-shadow: var(--shadow-sm);
+}
+.bubble-user {
+  background: var(--coral-light);
+  border: var(--stroke);
+  border-radius: 20px 20px 6px 20px;
+  padding: 12px 16px;
+  font-size: 15px;
+  max-width: 80%;
+  margin-left: auto;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ==================== 输入框 ==================== */
+.input-doodle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border: var(--stroke);
+  border-radius: 16px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow-sm);
+}
+.input-doodle input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-family: var(--font-rounded);
+  flex: 1;
+  background: transparent;
+}
+
+/* ==================== 布局工具 ==================== */
+.flex-row { display: flex; align-items: center; gap: 12px; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.flex-col { display: flex; flex-direction: column; gap: 12px; }
+.gap-sm { gap: 8px; }
+.gap-md { gap: 16px; }
+.gap-lg { gap: 24px; }
+.mt-sm { margin-top: 8px; }
+.mt-md { margin-top: 16px; }
+.mt-lg { margin-top: 24px; }
+.flex-1 { flex: 1; }
+.text-center { text-align: center; }
+
+.title-1 { font-size: 26px; font-weight: 900; color: var(--ink); }
+.title-2 { font-size: 20px; font-weight: 800; color: var(--ink); }
+.title-3 { font-size: 17px; font-weight: 700; color: var(--ink); }
+.body { font-size: 15px; color: var(--ink-light); }
+.caption { font-size: 13px; color: var(--ink-lighter); }
+
+/* 手绘下划线 */
+.underline-doodle {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8'%3E%3Cpath d='M0,4 Q15,0 30,5 Q45,8 60,3 Q75,1 90,6 Q105,9 120,4' fill='none' stroke='%23FFC940' stroke-width='3'/%3E%3C/svg%3E") bottom repeat-x;
+  padding-bottom: 6px;
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================================ -->
+<!-- 屏幕 1: 欢迎 / 登录页 -->
+<!-- ================================================================ -->
+<div class="screen-group">
+  <div class="screen-label">屏幕 1 · 欢迎登录</div>
+  <div class="phone">
+    <div class="phone-content" style="justify-content: center; gap: 28px;">
+
+      <!-- Logo 区 -->
+      <div style="text-align: center;">
+        <div style="display: inline-flex; align-items: center; justify-content: center;
+                    width: 90px; height: 90px; border-radius: 50%;
+                    background: var(--coral-light); border: var(--stroke-fat);
+                    margin-bottom: 16px;">
+          <span style="font-size: 48px;">💗</span>
+        </div>
+        <div class="title-1">康护亲</div>
+        <div style="font-size: 15px; color: var(--ink-light); margin-top: 6px;">
+          守护爸妈，不远不近刚刚好
+        </div>
+      </div>
+
+      <!-- 星星装饰 -->
+      <div class="stars" style="justify-content: center;">
+        <span class="star1">⭐</span>
+        <span class="star2">✨</span>
+        <span class="star3">🌟</span>
+      </div>
+
+      <!-- 插图区 — 简笔画老人 -->
+      <div style="display: flex; justify-content: center; gap: 28px;">
+        <div style="text-align: center;">
+          <div class="avatar" style="width:72px;height:72px;font-size:38px;">👵</div>
+          <div style="font-size:13px;font-weight:700;margin-top:6px;">妈妈</div>
+        </div>
+        <div style="display:flex;align-items:center;font-size:28px;color:var(--coral);">💕</div>
+        <div style="text-align: center;">
+          <div class="avatar" style="width:72px;height:72px;font-size:38px;background:var(--sky-light);">👧</div>
+          <div style="font-size:13px;font-weight:700;margin-top:6px;">女儿</div>
+        </div>
+      </div>
+
+      <!-- 按钮区 -->
+      <div class="flex-col gap-sm">
+        <div class="btn-primary">📱 手机号注册</div>
+        <div class="btn-secondary">🔑 已有账号，立即登录</div>
+      </div>
+
+      <!-- 底部文字 -->
+      <div class="text-center caption">
+        注册即表示同意 <span style="text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px;">用户协议</span> 和 <span style="text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px;">隐私政策</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 屏幕 2: 首页仪表盘 -->
+<!-- ================================================================ -->
+<div class="screen-group">
+  <div class="screen-label">屏幕 2 · 首页仪表盘</div>
+  <div class="phone">
+    <div class="phone-content" style="gap: 16px; overflow-y: auto;">
+
+      <!-- 顶部问候 -->
+      <div class="flex-between">
+        <div>
+          <div class="title-1">早上好 ☀️</div>
+          <div class="body">今天感觉怎么样？</div>
+        </div>
+        <div class="avatar">👴</div>
+      </div>
+      <div class="stars">
+        <span class="star1">⭐</span>
+        <span class="star2">✨</span>
+        <span class="star3">🌟</span>
+      </div>
+
+      <!-- 状态卡 -->
+      <div class="card-highlight">
+        <div class="flex-row gap-md">
+          <span style="font-size:42px;">💗</span>
+          <div class="flex-1">
+            <div class="title-3">一切正常 🎉</div>
+            <div class="body" style="font-size:13px;">各项指标都在健康范围内，继续保持！</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 三项核心指标 -->
+      <div class="metric-row">
+        <div class="metric-card">
+          <div class="metric-emoji">❤️</div>
+          <div class="metric-value" style="color:#FF6B6B;">72</div>
+          <div class="metric-label">静息心率</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-emoji">🫁</div>
+          <div class="metric-value" style="color:#5BA4E6;">98<span style="font-size:16px;">%</span></div>
+          <div class="metric-label">血氧饱和度</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-emoji">😴</div>
+          <div class="metric-value" style="color:#FFC940;">7.2<span style="font-size:16px;">h</span></div>
+          <div class="metric-label">昨晚睡眠</div>
+        </div>
+      </div>
+
+      <!-- 今日任务进度 -->
+      <div class="card">
+        <div class="flex-between">
+          <span class="title-3">📋 今日健康任务</span>
+          <span style="font-size:17px;font-weight:900;color:var(--coral);">65%</span>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:65%;"></div>
+          </div>
+        </div>
+        <div class="flex-row gap-sm mt-sm" style="font-size:13px;color:var(--ink-light);">
+          <span>✅ 测量心率</span>
+          <span>✅ 服药提醒</span>
+          <span>⬜ 散步 3000步</span>
+        </div>
+      </div>
+
+      <!-- AI 助手入口 -->
+      <div class="card-sky">
+        <div class="flex-row gap-md">
+          <div class="avatar" style="background:var(--sky-light);">🤖</div>
+          <div class="flex-1">
+            <div class="title-3">AI 健康小助手</div>
+            <div class="body" style="font-size:13px;">点击和我聊聊您的健康问题～</div>
+          </div>
+          <span style="font-size:20px;">➡️</span>
+        </div>
+      </div>
+
+      <!-- 快捷操作 -->
+      <div class="flex-row gap-sm">
+        <div class="btn-secondary flex-1" style="font-size:15px;flex-direction:column;gap:4px;padding:16px 8px;">
+          <span style="font-size:28px;">📞</span> 紧急求助
+        </div>
+        <div class="btn-secondary flex-1" style="font-size:15px;flex-direction:column;gap:4px;padding:16px 8px;">
+          <span style="font-size:28px;">👨‍👩‍👧</span> 守护者
+        </div>
+        <div class="btn-secondary flex-1" style="font-size:15px;flex-direction:column;gap:4px;padding:16px 8px;">
+          <span style="font-size:28px;">📊</span> 健康报告
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 屏幕 3: 健康档案 & 告警页 -->
+<!-- ================================================================ -->
+<div class="screen-group">
+  <div class="screen-label">屏幕 3 · 健康详情 &amp; 告警</div>
+  <div class="phone">
+    <div class="phone-content" style="gap: 16px; overflow-y: auto;">
+
+      <!-- 导航栏 -->
+      <div class="flex-between">
+        <span style="font-size:22px;">←</span>
+        <span class="title-2">健康详情</span>
+        <span style="font-size:22px;">⚙️</span>
+      </div>
+
+      <!-- 今日摘要 -->
+      <div class="card-sun">
+        <div class="flex-row gap-md">
+          <span style="font-size:40px;">📋</span>
+          <div class="flex-1">
+            <div class="title-3">2026年6月15日 星期日</div>
+            <div class="body" style="font-size:13px;">数据更新时间：刚刚</div>
+          </div>
+          <span class="badge badge-ok">✓ 正常</span>
+        </div>
+      </div>
+
+      <!-- 详细指标列表 -->
+      <div class="flex-col gap-sm">
+        <div class="card">
+          <div class="flex-between">
+            <div class="flex-row gap-sm">
+              <span style="font-size:26px;">❤️</span>
+              <div><div class="title-3">心率</div><div class="caption">静息心率</div></div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:28px;font-weight:900;color:var(--coral);">72</div>
+              <span class="badge badge-ok">正常</span>
+            </div>
+          </div>
+          <div class="doodle-line"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="flex-row gap-sm body" style="font-size:13px;">
+            <span>📊 趋势稳定</span>
+            <span>🕐 每小时监测</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex-between">
+            <div class="flex-row gap-sm">
+              <span style="font-size:26px;">🫁</span>
+              <div><div class="title-3">血氧饱和度</div><div class="caption">SpO₂</div></div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:28px;font-weight:900;color:var(--sky);">98<span style="font-size:16px;">%</span></div>
+              <span class="badge badge-ok">正常</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex-between">
+            <div class="flex-row gap-sm">
+              <span style="font-size:26px;">😴</span>
+              <div><div class="title-3">睡眠</div><div class="caption">昨晚睡眠时长</div></div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:28px;font-weight:900;color:var(--sun);">7.2<span style="font-size:16px;">h</span></div>
+              <span class="badge badge-ok">充足</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 如果心率异常时… 的告警样式 -->
+        <div class="card" style="background:#FFF0F0; border-color:#FF4444;">
+          <div class="flex-between">
+            <div class="flex-row gap-sm">
+              <span style="font-size:26px;">⚠️</span>
+              <div><div class="title-3">跌倒检测</div><div class="caption">今天 14:32</div></div>
+            </div>
+            <span class="badge badge-danger">⚠ 需关注</span>
+          </div>
+          <div class="doodle-line"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="body" style="font-size:13px;">
+            已通知守护者 <strong>女儿</strong> 和 <strong>儿子</strong> ·
+            <span style="color:var(--coral);font-weight:700;text-decoration:underline;text-underline-offset:2px;">查看详情 →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部按钮 -->
+      <div class="btn-primary">📞 一键呼叫紧急联系人</div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 屏幕 4: AI 对话页 -->
+<!-- ================================================================ -->
+<div class="screen-group">
+  <div class="screen-label">屏幕 4 · AI 健康问诊</div>
+  <div class="phone">
+    <div class="phone-content" style="gap: 16px;">
+
+      <!-- 导航 -->
+      <div class="flex-between">
+        <span style="font-size:22px;">←</span>
+        <span class="title-2">AI 健康小助手</span>
+        <div class="avatar avatar-sm">🤖</div>
+      </div>
+
+      <!-- 对话区 -->
+      <div class="flex-col gap-sm" style="flex:1; overflow-y: auto;">
+        <div class="bubble-bot">
+          <span style="font-size:18px;">👋</span> 您好！我是您的专属健康小助手。我可以帮您分析健康数据、解答用药疑问、生成健康报告。请问有什么可以帮您的？
+        </div>
+        <div class="bubble-user">
+          我最近睡眠不太好，晚上容易醒
+        </div>
+        <div class="bubble-bot">
+          我了解了。根据您最近一周的健康数据：<br><br>
+          📊 <strong>平均入睡时间</strong>：23:15<br>
+          😴 <strong>平均睡眠时长</strong>：6.2小时<br>
+          🔄 <strong>夜间醒来次数</strong>：2-3次<br><br>
+          💡 <strong>建议：</strong> 睡前1小时放下手机，喝杯温牛奶。您服用的降压药（氨氯地平）一般不影响睡眠，但如果睡前服用可能会有轻微不适。建议明早和医生确认一下服药时间。<br><br>
+          需要我帮您设置一个「睡前提醒」吗？
+        </div>
+      </div>
+
+      <!-- 快捷回复 -->
+      <div class="flex-row gap-sm" style="flex-wrap:wrap;">
+        <span class="btn-sm" style="background:var(--sun-light);">🕘 设置睡前提醒</span>
+        <span class="btn-sm" style="background:var(--sky-light);">💊 查看用药建议</span>
+        <span class="btn-sm" style="background:var(--coral-light);">📊 生成周报</span>
+      </div>
+
+      <!-- 输入框 -->
+      <div class="input-doodle">
+        <span>✏️</span>
+        <input type="text" placeholder="输入您的问题...">
+        <span style="font-size:20px;font-weight:900;color:var(--coral);cursor:pointer;">➤</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 屏幕 5: 守护者列表 -->
+<!-- ================================================================ -->
+<div class="screen-group">
+  <div class="screen-label">屏幕 5 · 守护者管理</div>
+  <div class="phone">
+    <div class="phone-content" style="gap: 16px;">
+
+      <div class="flex-between">
+        <span style="font-size:22px;">←</span>
+        <span class="title-2">我的守护者</span>
+        <span style="font-size:22px; color:var(--coral);">+</span>
+      </div>
+
+      <div class="body text-center">共有 <strong>3</strong> 位守护者关注着您的健康 💕</div>
+
+      <!-- 守护者列表 -->
+      <div class="flex-col gap-sm">
+        <div class="card">
+          <div class="flex-row gap-md">
+            <div class="avatar">👧</div>
+            <div class="flex-1">
+              <div class="title-3">女儿 · 小红</div>
+              <div class="body" style="font-size:13px;">📱 短信 · 📧 邮件 · 🔔 推送</div>
+              <div style="font-size:12px;color:var(--sky);font-weight:700;">✓ 已绑定 · 主要联系人</div>
+            </div>
+            <span style="font-size:20px;color:var(--ink-lighter);">⚙️</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex-row gap-md">
+            <div class="avatar" style="background:var(--sky-light);">👦</div>
+            <div class="flex-1">
+              <div class="title-3">儿子 · 小明</div>
+              <div class="body" style="font-size:13px;">📱 短信 · 🔔 推送</div>
+              <div style="font-size:12px;color:var(--sky);font-weight:700;">✓ 已绑定</div>
+            </div>
+            <span style="font-size:20px;color:var(--ink-lighter);">⚙️</span>
+          </div>
+        </div>
+
+        <div class="card" style="border-style:dashed; background:transparent;">
+          <div class="text-center" style="padding:12px;">
+            <div style="font-size:32px;">➕</div>
+            <div class="title-3" style="margin-top:4px;">添加新守护者</div>
+            <div class="body" style="font-size:13px;">扫码或输入手机号邀请</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 通知设置卡片 -->
+      <div class="card-sun">
+        <div class="title-3">📢 通知设置</div>
+        <div class="flex-col gap-sm mt-sm">
+          <div class="flex-between body">
+            <span>📱 短信通知</span>
+            <span style="color:var(--coral);font-weight:800;">开</span>
+          </div>
+          <div class="doodle-line"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="flex-between body">
+            <span>📧 邮件通知</span>
+            <span style="color:var(--ink-lighter);font-weight:800;">关</span>
+          </div>
+          <div class="doodle-line"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="flex-between body">
+            <span>🔔 App推送</span>
+            <span style="color:var(--coral);font-weight:800;">开</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-primary">💌 邀请家人加入守护</div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
