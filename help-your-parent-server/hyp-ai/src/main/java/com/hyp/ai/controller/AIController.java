@@ -30,4 +30,13 @@ public class AIController {
         String reply = aiService.chat(message);
         return ResponseEntity.ok(ApiResponse.ok(Map.of("reply", reply)));
     }
+
+    @GetMapping("/report")
+    public ResponseEntity<ApiResponse<Map<String, String>>> report(
+            @RequestParam String from,
+            @RequestParam String to,
+            @RequestAttribute("userId") Long userId) {
+        String report = aiService.generateReport(userId, from, to);
+        return ResponseEntity.ok(ApiResponse.ok(Map.of("report", report)));
+    }
 }

@@ -72,7 +72,7 @@ private struct ElderTabView: View {
             .tag(ElderTab.home)
 
             NavigationStack {
-                ElderHealthPlaceholder()
+                HealthDetailView()
             }
             .tabItem {
                 Label(String(localized: "health_tab", defaultValue: "健康"), systemImage: "heart.fill")
@@ -80,7 +80,7 @@ private struct ElderTabView: View {
             .tag(ElderTab.health)
 
             NavigationStack {
-                ElderAIPlaceholder()
+                AIAssistantView()
             }
             .tabItem {
                 Label(String(localized: "ai_tab", defaultValue: "AI助手"), systemImage: "brain.head.profile")
@@ -88,7 +88,7 @@ private struct ElderTabView: View {
             .tag(ElderTab.ai)
 
             NavigationStack {
-                ElderGuardiansPlaceholder()
+                GuardianManagementView()
             }
             .tabItem {
                 Label(String(localized: "guardian_tab", defaultValue: "守护者"), systemImage: "person.2.fill")
@@ -130,7 +130,7 @@ private struct GuardianTabView: View {
             .tag(GuardianTab.home)
 
             NavigationStack {
-                GuardianAlertsPlaceholder()
+                AlertHistoryView()
             }
             .tabItem {
                 Label(String(localized: "guardian_tab_alerts", defaultValue: "告警"), systemImage: "bell.fill")
@@ -146,80 +146,6 @@ private struct GuardianTabView: View {
             .tag(GuardianTab.settings)
         }
         .tint(.doodleCoral)
-    }
-}
-
-// MARK: - Placeholder Screens
-
-private struct ElderHealthPlaceholder: View {
-    var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                Text(String(localized: "health_detail", defaultValue: "健康详情"))
-                    .font(.system(size: 20, weight: .black, design: .rounded))
-                    .foregroundStyle(.doodleInk)
-                Text(String(localized: "health_detail_placeholder", defaultValue: "详细健康数据将在此展示"))
-                    .font(.system(size: 15, design: .rounded))
-                    .foregroundStyle(.doodleInkLight)
-            }
-            .padding()
-        }
-        .background(Color.doodleCream)
-        .navigationTitle(String(localized: "health_tab", defaultValue: "健康"))
-    }
-}
-
-private struct ElderAIPlaceholder: View {
-    var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                Text("\(String(localized: "ai_health_assistant", defaultValue: "AI 健康小助手"))")
-                    .font(.system(size: 20, weight: .black, design: .rounded))
-                    .foregroundStyle(.doodleInk)
-                Text(String(localized: "ai_placeholder", defaultValue: "AI 对话功能将在此展示"))
-                    .font(.system(size: 15, design: .rounded))
-                    .foregroundStyle(.doodleInkLight)
-            }
-            .padding()
-        }
-        .background(Color.doodleCream)
-        .navigationTitle(String(localized: "ai_tab", defaultValue: "AI助手"))
-    }
-}
-
-private struct ElderGuardiansPlaceholder: View {
-    var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                Text(String(localized: "my_guardians", defaultValue: "我的守护者"))
-                    .font(.system(size: 20, weight: .black, design: .rounded))
-                    .foregroundStyle(.doodleInk)
-                Text(String(localized: "guardian_placeholder", defaultValue: "守护者管理功能将在此展示"))
-                    .font(.system(size: 15, design: .rounded))
-                    .foregroundStyle(.doodleInkLight)
-            }
-            .padding()
-        }
-        .background(Color.doodleCream)
-        .navigationTitle(String(localized: "guardian_tab", defaultValue: "守护者"))
-    }
-}
-
-private struct GuardianAlertsPlaceholder: View {
-    var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                Text("\(String(localized: "guardian_alerts_title", defaultValue: "告警记录"))")
-                    .font(.system(size: 20, weight: .black, design: .rounded))
-                    .foregroundStyle(.doodleInk)
-                Text(String(localized: "guardian_alerts_placeholder", defaultValue: "老人的健康告警将在此展示"))
-                    .font(.system(size: 15, design: .rounded))
-                    .foregroundStyle(.doodleInkLight)
-            }
-            .padding()
-        }
-        .background(Color.doodleCream)
-        .navigationTitle(String(localized: "guardian_tab_alerts", defaultValue: "告警"))
     }
 }
 

@@ -35,6 +35,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                         List.of(new SimpleGrantedAuthority("ROLE_" + role))
                 );
                 SecurityContextHolder.getContext().setAuthentication(auth);
+                request.setAttribute("userId", Long.valueOf(userId));
             } catch (Exception e) {
                 // Token invalid, continue without auth
             }

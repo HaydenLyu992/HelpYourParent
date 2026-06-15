@@ -1,6 +1,5 @@
-package com.hyp.guardian;
+package com.hyp.common;
 
-import com.hyp.guardian.entity.GuardianBinding;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;

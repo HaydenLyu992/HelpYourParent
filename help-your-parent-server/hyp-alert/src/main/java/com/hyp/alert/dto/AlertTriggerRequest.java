@@ -9,5 +9,6 @@ public class AlertTriggerRequest {
     private String riskType;
     private String alertLevel;
     private Map<String, Double> metrics;
+    private String aiAdvice;
     private String deviceToken;
 }

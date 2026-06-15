@@ -6,7 +6,6 @@ import com.hyp.alert.service.AlertService;
 import com.hyp.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,17 +18,28 @@ public class AlertController {
     private final AlertService alertService;
 
     @PostMapping("/trigger")
-    public ResponseEntity<ApiResponse<AlertResponse>> trigger(@RequestBody AlertTriggerRequest req, Authentication auth) {
+    public ResponseEntity<ApiResponse<AlertResponse>> trigger(
+            @RequestBody AlertTriggerRequest req,
+            @RequestAttribute("userId") Long userId) {
         if (req.getElderUserId() == null) {
-            req.setElderUserId(Long.valueOf(auth.getName()));
+            req.setElderUserId(userId);
         }
         AlertResponse resp = alertService.trigger(req);
         return ResponseEntity.ok(ApiResponse.ok(resp));
     }
 
-    @GetMapping("/history")
-    public ResponseEntity<ApiResponse<List<AlertResponse>>> getHistory(Authentication auth) {
-        Long elderId = Long.valueOf(auth.getName());
-        return ResponseEntity.ok(ApiResponse.ok(alertService.getHistory(elderId)));
+    @GetMapping("/list")
+    public ResponseEntity<ApiResponse<List<AlertResponse>>> getHistory(
+            @RequestAttribute("userId") Long userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(required = false) String level) {
+        return ResponseEntity.ok(ApiResponse.ok(alertService.getHistory(userId, page, size, level)));
+    }
+
+    @GetMapping("/detail")
+    public ResponseEntity<ApiResponse<AlertResponse>> getDetail(
+            @RequestParam Long alertId) {
+        return ResponseEntity.ok(ApiResponse.ok(alertService.getDetail(alertId)));
     }
 }

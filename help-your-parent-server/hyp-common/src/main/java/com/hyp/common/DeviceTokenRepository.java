@@ -1,6 +1,5 @@
-package com.hyp.alert;
+package com.hyp.common;
 
-import com.hyp.alert.entity.DeviceToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;

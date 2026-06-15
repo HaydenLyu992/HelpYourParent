@@ -1,6 +1,5 @@
-package com.hyp.alert.entity;
+package com.hyp.common;
 
-import com.hyp.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

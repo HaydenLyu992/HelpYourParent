@@ -56,4 +56,16 @@ public class AIService {
         if (spo2 < 95 && spo2 > 0) return "您的血氧偏低，建议开窗通风并深呼吸。如低于90%请立即就医。";
         return "您的健康指标需要关注，建议联系守护者或医生进行进一步评估。";
     }
+
+    public String generateReport(Long userId, String from, String to) {
+        String prompt = """
+                请根据以下时间段（%s 至 %s）的用户健康数据，生成一份简短的健康周报。
+                用温暖鼓励的语气，总结健康趋势，给出生活建议。150字以内。
+                """.formatted(from, to);
+        String result = deepSeekClient.chat(CHAT_SYSTEM_PROMPT, prompt);
+        if (result == null) {
+            return "本周您的健康指标总体平稳。建议继续保持规律作息，适量运动。如有不适请及时联系守护者或就医。";
+        }
+        return result;
+    }
 }

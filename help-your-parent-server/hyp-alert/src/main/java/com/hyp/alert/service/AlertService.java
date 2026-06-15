@@ -4,9 +4,7 @@ import com.hyp.alert.*;
 import com.hyp.alert.dto.AlertResponse;
 import com.hyp.alert.dto.AlertTriggerRequest;
 import com.hyp.alert.entity.*;
-import com.hyp.common.Constants;
-import com.hyp.guardian.GuardianBindingRepository;
-import com.hyp.guardian.entity.GuardianBinding;
+import com.hyp.common.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +35,6 @@ public class AlertService {
 
     @Transactional
     public AlertResponse trigger(AlertTriggerRequest req) {
-        // Check merge window
         String mergeKey = "alert:merge:" + req.getElderUserId() + ":" + req.getRiskType();
         String existing = redisTemplate.opsForValue().get(mergeKey);
 
@@ -57,13 +54,12 @@ public class AlertService {
         alert.setAlertLevel(req.getAlertLevel());
         alert.setRiskType(req.getRiskType());
         alert.setSummary(buildSummary(req));
+        alert.setAiAdvice(req.getAiAdvice());
         alertRepo.save(alert);
 
-        // Set merge window
         redisTemplate.opsForValue().set(mergeKey, String.valueOf(alert.getId()),
                 Duration.ofSeconds(mergeWindowSeconds));
 
-        // Dispatch to elder + guardians with different messages
         dispatchToBoth(alert);
 
         alert.setDispatchedAt(LocalDateTime.now());
@@ -72,16 +68,27 @@ public class AlertService {
         return toResponse(alert);
     }
 
-    public List<AlertResponse> getHistory(Long elderUserId) {
-        return alertRepo.findByElderUserIdOrderByCreatedAtDesc(elderUserId)
-                .stream().map(this::toResponse).toList();
+    public List<AlertResponse> getHistory(Long userId, int page, int size, String level) {
+        List<AlertRecord> records;
+        if (level != null && !level.isEmpty()) {
+            records = alertRepo.findByElderUserIdAndAlertLevelOrderByCreatedAtDesc(userId, level);
+        } else {
+            records = alertRepo.findByElderUserIdOrderByCreatedAtDesc(userId);
+        }
+        int from = page * size;
+        int to = Math.min(from + size, records.size());
+        if (from >= records.size()) return List.of();
+        return records.subList(from, to).stream().map(this::toResponse).toList();
+    }
+
+    public AlertResponse getDetail(Long alertId) {
+        AlertRecord a = alertRepo.findById(alertId)
+                .orElseThrow(() -> BusinessException.notFound("告警记录"));
+        return toResponse(a);
     }
 
     private void dispatchToBoth(AlertRecord alert) {
-        // 1. Notify the elder: reassuring, tell them help is on the way
         notifyElder(alert);
-
-        // 2. Notify all guardians: detailed alert, urge them to check
         notifyGuardians(alert);
     }
 

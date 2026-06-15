@@ -16,5 +16,9 @@
             <groupId>com.hyp</groupId>
             <artifactId>hyp-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hyp</groupId>
+            <artifactId>hyp-alert</artifactId>
+        </dependency>
     </dependencies>
 </project>

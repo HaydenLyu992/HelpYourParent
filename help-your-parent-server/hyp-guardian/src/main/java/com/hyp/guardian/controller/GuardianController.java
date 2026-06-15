@@ -8,11 +8,9 @@ import com.hyp.guardian.service.GuardianService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/guardian")
@@ -22,48 +20,52 @@ public class GuardianController {
     private final GuardianService guardianService;
 
     @PostMapping("/request-bind")
-    public ResponseEntity<ApiResponse<Void>> requestBind(@Valid @RequestBody BindRequest req, Authentication auth) {
-        Long fromUserId = Long.valueOf(auth.getName());
-        guardianService.requestBind(fromUserId, req);
+    public ResponseEntity<ApiResponse<Void>> requestBind(
+            @Valid @RequestBody BindRequest req,
+            @RequestAttribute("userId") Long userId) {
+        guardianService.requestBind(userId, req);
         return ResponseEntity.ok(ApiResponse.ok());
     }
 
     @GetMapping("/pending-requests")
-    public ResponseEntity<ApiResponse<List<PendingRequestInfo>>> pendingRequests(Authentication auth) {
-        Long userId = Long.valueOf(auth.getName());
+    public ResponseEntity<ApiResponse<List<PendingRequestInfo>>> pendingRequests(
+            @RequestAttribute("userId") Long userId) {
         return ResponseEntity.ok(ApiResponse.ok(guardianService.pendingRequests(userId)));
     }
 
     @PostMapping("/accept-bind/{requestId}")
-    public ResponseEntity<ApiResponse<Void>> acceptBind(@PathVariable Long requestId, Authentication auth) {
-        Long userId = Long.valueOf(auth.getName());
+    public ResponseEntity<ApiResponse<Void>> acceptBind(
+            @PathVariable Long requestId,
+            @RequestAttribute("userId") Long userId) {
         guardianService.acceptBind(requestId, userId);
         return ResponseEntity.ok(ApiResponse.ok());
     }
 
     @PostMapping("/reject-bind/{requestId}")
-    public ResponseEntity<ApiResponse<Void>> rejectBind(@PathVariable Long requestId, Authentication auth) {
-        Long userId = Long.valueOf(auth.getName());
+    public ResponseEntity<ApiResponse<Void>> rejectBind(
+            @PathVariable Long requestId,
+            @RequestAttribute("userId") Long userId) {
         guardianService.rejectBind(requestId, userId);
         return ResponseEntity.ok(ApiResponse.ok());
     }
 
-    @GetMapping("/list-guardians")
-    public ResponseEntity<ApiResponse<List<GuardianInfo>>> listGuardians(Authentication auth) {
-        Long elderId = Long.valueOf(auth.getName());
-        return ResponseEntity.ok(ApiResponse.ok(guardianService.listGuardians(elderId)));
+    @GetMapping("/list")
+    public ResponseEntity<ApiResponse<List<GuardianInfo>>> listGuardians(
+            @RequestAttribute("userId") Long userId) {
+        return ResponseEntity.ok(ApiResponse.ok(guardianService.listGuardians(userId)));
     }
 
-    @GetMapping("/list-elders")
-    public ResponseEntity<ApiResponse<List<GuardianInfo>>> listElders(Authentication auth) {
-        Long guardianId = Long.valueOf(auth.getName());
-        return ResponseEntity.ok(ApiResponse.ok(guardianService.listElders(guardianId)));
+    @GetMapping("/elders")
+    public ResponseEntity<ApiResponse<List<GuardianInfo>>> listElders(
+            @RequestAttribute("userId") Long userId) {
+        return ResponseEntity.ok(ApiResponse.ok(guardianService.listElders(userId)));
     }
 
-    @DeleteMapping("/unbind/{targetUserId}")
-    public ResponseEntity<ApiResponse<Void>> unbind(@PathVariable Long targetUserId, Authentication auth) {
-        Long userId = Long.valueOf(auth.getName());
-        guardianService.unbind(userId, targetUserId);
+    @DeleteMapping("/remove")
+    public ResponseEntity<ApiResponse<Void>> unbind(
+            @RequestParam Long guardianUserId,
+            @RequestAttribute("userId") Long userId) {
+        guardianService.unbind(guardianUserId, userId);
         return ResponseEntity.ok(ApiResponse.ok());
     }
 }

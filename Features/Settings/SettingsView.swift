@@ -16,7 +16,6 @@ struct SettingsView: View {
     @AppStorage("userNickname") private var userNickname: String = ""
     @AppStorage("userPhone") private var userPhone: String = ""
 
-    @State private var pushEnabled = true
     @State private var boundUsers: [BoundUserInfo] = []
     @State private var isLoadingBoundUsers = true
     @State private var showConfirmLogout = false
@@ -63,40 +62,28 @@ struct SettingsView: View {
                 }
 
                 // MARK: - Notification Settings
-                DoodleCardView(background: .doodleSunLight) {
-                    VStack(spacing: 12) {
-                        Text("\(String(localized: "settings_notifications", defaultValue: "通知设置")) 🔔")
-                            .font(.system(size: 17, weight: .black, design: .rounded))
-                            .foregroundStyle(.doodleInk)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-
-                        Toggle(isOn: $pushEnabled) {
-                            HStack(spacing: 10) {
-                                Text("📱")
-                                    .font(.system(size: 18))
-                                Text(String(localized: "settings_push_notifications", defaultValue: "App 推送通知"))
-                                    .font(.system(size: 15, weight: .bold, design: .rounded))
+                NavigationLink {
+                    NotificationSettingsView()
+                } label: {
+                    DoodleCardView(background: .doodleSunLight) {
+                        HStack(spacing: 12) {
+                            Text("🔔")
+                                .font(.system(size: 28))
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(String(localized: "settings_notifications", defaultValue: "通知设置"))
+                                    .font(.system(size: 17, weight: .black, design: .rounded))
                                     .foregroundStyle(.doodleInk)
+                                Text(String(localized: "settings_notifications_hint", defaultValue: "管理推送、短信和邮件通知渠道"))
+                                    .font(.system(size: 12, design: .rounded))
+                                    .foregroundStyle(.doodleInkLight)
                             }
-                        }
-                        .tint(.doodleCoral)
-
-                        Divider()
-                            .background(Color.doodleInkLighter)
-
-                        HStack(spacing: 10) {
-                            Text("📧")
-                                .font(.system(size: 18))
-                            Text(String(localized: "settings_email_notifications", defaultValue: "邮件通知"))
-                                .font(.system(size: 15, weight: .bold, design: .rounded))
-                                .foregroundStyle(.doodleInk)
                             Spacer()
-                            Text(String(localized: "settings_email_hint", defaultValue: "请在网页端设置"))
-                                .font(.system(size: 12, design: .rounded))
-                                .foregroundStyle(.doodleInkLighter)
+                            Text("➡️")
+                                .font(.system(size: 18))
                         }
                     }
                 }
+                .buttonStyle(.plain)
 
                 // MARK: - Bound Users Section
                 if !boundUsers.isEmpty {

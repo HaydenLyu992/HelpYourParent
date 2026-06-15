@@ -65,4 +65,7 @@ extension Color {
 
     /// Red background for "danger" status badges (same as coral).
     static let doodleBadgeDanger = Color.doodleCoral
+
+    /// Mint green for step count and activity indicators.
+    static let doodleMint = Color(red: 0.3569, green: 0.8235, blue: 0.6196)
 }

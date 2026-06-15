@@ -147,8 +147,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     private func handleBindingRequestNotification(userInfo: [AnyHashable: Any]) {
         guard let type = userInfo["type"] as? String,
               type == "binding_request",
-              let requestId = userInfo["request_id"] as? String,
-              let fromUserId = userInfo["from_user_id"] as? Int else {
+              let requestId = userInfo["requestId"] as? Int,
+              let fromUserId = userInfo["fromUserId"] as? Int else {
             return
         }
 
@@ -158,7 +158,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
                 name: .showBindingRequest,
                 object: nil,
                 userInfo: [
-                    "requestId": requestId,
+                    "requestId": String(requestId),
                     "fromUserId": fromUserId
                 ]
             )

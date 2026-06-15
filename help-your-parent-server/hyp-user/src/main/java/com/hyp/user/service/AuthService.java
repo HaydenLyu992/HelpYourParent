@@ -69,4 +69,29 @@ public class AuthService {
             throw BusinessException.notFound("登录状态已过期，请重新登录");
         }
     }
+
+    public java.util.Map<String, Object> getProfile(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> BusinessException.notFound("用户"));
+        return java.util.Map.of(
+                "userId", user.getId(),
+                "phone", user.getPhone(),
+                "role", user.getRole(),
+                "nickname", user.getNickname() != null ? user.getNickname() : "",
+                "avatarUrl", user.getAvatarUrl() != null ? user.getAvatarUrl() : ""
+        );
+    }
+
+    @Transactional
+    public void updateProfile(Long userId, java.util.Map<String, String> body) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> BusinessException.notFound("用户"));
+        if (body.containsKey("nickname")) {
+            user.setNickname(body.get("nickname"));
+        }
+        if (body.containsKey("avatarUrl")) {
+            user.setAvatarUrl(body.get("avatarUrl"));
+        }
+        userRepository.save(user);
+    }
 }

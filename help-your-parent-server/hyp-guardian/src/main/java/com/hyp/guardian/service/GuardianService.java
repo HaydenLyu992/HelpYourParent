@@ -1,18 +1,12 @@
 package com.hyp.guardian.service;
 
-import com.hyp.alert.DeviceTokenRepository;
-import com.hyp.alert.entity.DeviceToken;
 import com.hyp.alert.service.APNsService;
-import com.hyp.common.BusinessException;
-import com.hyp.common.User;
-import com.hyp.common.UserRepository;
+import com.hyp.common.*;
 import com.hyp.guardian.BindingRequestRepository;
-import com.hyp.guardian.GuardianBindingRepository;
 import com.hyp.guardian.dto.BindRequest;
 import com.hyp.guardian.dto.GuardianInfo;
 import com.hyp.guardian.dto.PendingRequestInfo;
 import com.hyp.guardian.entity.BindingRequest;
-import com.hyp.guardian.entity.GuardianBinding;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
